@@ -1,7 +1,0 @@
-RXD: 11
-TXD: 10
-GND: GND
-VCC: 5V
-
-
-GND -> 100ohm -> LED (short) -> 3
