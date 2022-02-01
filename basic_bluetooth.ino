@@ -47,16 +47,11 @@ void loop()
       inChar=serial_connection.read();
     }
 
-    Serial.print("Status: ");
-    Serial.println(inData[0]);
-    Serial.print("Winkel: ");
-
-    memcpy(a2, &inData[1], 3*sizeof(*inData));
-    Serial.println(a2);
-
+    Serial.print("Helligkeit: ");
+    Serial.println(inData);
 
     // analogWrite(LED, String(inData).toInt());
-    // servoblau.write(String(inData).toInt());
+    servoblau.write(String(inData).toInt());
 
   }
   delay(100);//Pause for a moment 
