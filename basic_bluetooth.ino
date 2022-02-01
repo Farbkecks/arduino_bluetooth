@@ -1,16 +1,9 @@
 #include "SoftwareSerial.h"
-#include <Servo.h>
-
-Servo servoblau;
-
 SoftwareSerial serial_connection(10, 11);//Create a serial connection with TX and RX on these pins
 #define BUFFER_SIZE 64//This will prevent buffer overruns.
 char inData[BUFFER_SIZE];//This is a character buffer where the data sent by the python script will go.
-char a2[BUFFER_SIZE-1];
 char inChar=-1;//Initialie the first character as nothing
 int i=0;
-
-
 
 int LED = 3;
 
@@ -21,7 +14,6 @@ void setup()
   serial_connection.println("Ready!!!");//Send something to just start comms. This will never be seen.
   Serial.println("Started");//Tell the serial monitor that the sketch has started.
   pinMode(LED, OUTPUT);
-  servoblau.attach(8);
 }
 void loop()
 {
@@ -47,16 +39,10 @@ void loop()
       inChar=serial_connection.read();
     }
 
-    Serial.print("Status: ");
-    Serial.println(inData[0]);
-    Serial.print("Winkel: ");
+    Serial.print("Helligkeit: ");
+    Serial.println(inData);
 
-    memcpy(a2, &inData[1], 3*sizeof(*inData));
-    Serial.println(a2);
-
-
-    // analogWrite(LED, String(inData).toInt());
-    // servoblau.write(String(inData).toInt());
+    analogWrite(LED, String(inData).toInt());
 
   }
   delay(100);//Pause for a moment 
