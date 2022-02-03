@@ -31,7 +31,7 @@ void loop()
   byte byte_count=serial_connection.available();//This gets the number of bytes that were sent by the python script
   if(byte_count)//If there are any bytes then deal with them
   {
-    // Serial.println("Incoming Data");//Signal to the monitor that something is happening
+    Serial.println("Incoming Data");//Signal to the monitor that something is happening
     int first_bytes=byte_count;//initialize the number of bytes that we might handle. 
     int remaining_bytes=0;//Initialize the bytes that we may have to burn off to prevent a buffer overrun
     if(first_bytes>=BUFFER_SIZE-1)//If the incoming byte count is more than our buffer...
@@ -73,7 +73,6 @@ void loop()
     Serial.print("Winkel: ");
     Serial.println(winkel);
     }
-
   }
   delay(100);//Pause for a moment 
 }
