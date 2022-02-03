@@ -10,7 +10,8 @@ char a2[BUFFER_SIZE-1];
 char inChar=-1;//Initialie the first character as nothing
 int i=0;
 
-int winkel = 90;
+int winkel = 0;
+int winkel_old = 90;
 
 
 int LED = 3;
@@ -52,16 +53,26 @@ void loop()
       winkel = winkel + 10;
     }
 
-     if(inData[0] == '2' && winkel > 0){
+    if(inData[0] == '2' && winkel > 0){
       winkel = winkel - 10;
     }
+    
+    if(inData[1] == '0'){
+      digitalWrite(LED, 0);
+    }
+    if(inData[1] == '1'){
+      digitalWrite(LED, 1);
+    }
 
-    Serial.print("Winkel: ");
-    Serial.println(winkel);
+    
 
     // analogWrite(LED, String(inData).toInt());
-    servoblau.write(winkel);
-
+    if(winkel != winkel_old){
+    winkel_old = winkel;  
+    servoblau.write(winkel_old);
+    Serial.print("Winkel: ");
+    Serial.println(winkel);
+    }
   }
   delay(100);//Pause for a moment 
 }
