@@ -10,7 +10,8 @@ char a2[BUFFER_SIZE-1];
 char inChar=-1;//Initialie the first character as nothing
 int i=0;
 
-int winkel = 90;
+int winkel = 0;
+int winkel_old = 90;
 
 
 int LED = 3;
@@ -30,7 +31,7 @@ void loop()
   byte byte_count=serial_connection.available();//This gets the number of bytes that were sent by the python script
   if(byte_count)//If there are any bytes then deal with them
   {
-    Serial.println("Incoming Data");//Signal to the monitor that something is happening
+    // Serial.println("Incoming Data");//Signal to the monitor that something is happening
     int first_bytes=byte_count;//initialize the number of bytes that we might handle. 
     int remaining_bytes=0;//Initialize the bytes that we may have to burn off to prevent a buffer overrun
     if(first_bytes>=BUFFER_SIZE-1)//If the incoming byte count is more than our buffer...
@@ -52,15 +53,26 @@ void loop()
       winkel = winkel + 10;
     }
 
-     if(inData[0] == '2' && winkel > 0){
+    if(inData[0] == '2' && winkel > 0){
       winkel = winkel - 10;
     }
+    
+    if(inData[1] == '0'){
+      digitalWrite(LED, 0);
+    }
+    if(inData[1] == '1'){
+      digitalWrite(LED, 1);
+    }
 
-    Serial.print("Winkel: ");
-    Serial.println(winkel);
+    
 
     // analogWrite(LED, String(inData).toInt());
-    servoblau.write(winkel);
+    if(winkel != winkel_old){
+    winkel_old = winkel;  
+    servoblau.write(winkel_old);
+    Serial.print("Winkel: ");
+    Serial.println(winkel);
+    }
 
   }
   delay(100);//Pause for a moment 
