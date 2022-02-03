@@ -8,7 +8,6 @@ port="COM5"
 bluetooth=serial.Serial(port, 9600)
 print("Connected")
 bluetooth.flushInput() #This gives the bluetooth a little kick
-
 while True:
     if keyboard.is_pressed("a"):
         bluetooth.write(b"1")
