@@ -1,15 +1,18 @@
 import serial
 import time
-
-eingabe = input("Helligkeit: ")
-
+import keyboard
 
 
 print("Start")
-port="COM5" #This will be different for various devices and on windows it will probably be a COM port.
-bluetooth=serial.Serial(port, 9600)#Start communications with the bluetooth unit
+port="COM5"
+bluetooth=serial.Serial(port, 9600)
 print("Connected")
 bluetooth.flushInput() #This gives the bluetooth a little kick
-bluetooth.write(str.encode(eingabe))
+while True:
+    if keyboard.is_pressed("a"):
+        bluetooth.write(b"1")
+    if keyboard.is_pressed("d"):
+        bluetooth.write(b"2")
+    time.sleep(.1)
 bluetooth.close() #Otherwise the connection will remain open until a timeout which ties up the /dev/thingamabob
 print("Done")

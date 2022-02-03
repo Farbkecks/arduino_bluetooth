@@ -5,6 +5,8 @@ char inData[BUFFER_SIZE];//This is a character buffer where the data sent by the
 char inChar=-1;//Initialie the first character as nothing
 int i=0;
 
+int winkel = 90;
+
 int LED = 3;
 
 void setup()
@@ -38,11 +40,20 @@ void loop()
     {
       inChar=serial_connection.read();
     }
+    if(inData[0] == '1' && winkel < 180){
+      winkel = winkel + 10;
+    }
 
-    Serial.print("Helligkeit: ");
-    Serial.println(inData);
+     if(inData[0] == '2' && winkel > 0){
+      winkel = winkel - 10;
+    }
 
-    analogWrite(LED, String(inData).toInt());
+    Serial.print("Winkel: ");
+    Serial.println(winkel);
+
+    // analogWrite(LED, String(inData).toInt());
+    servoblau.write(winkel);
+
 
   }
   delay(100);//Pause for a moment 
