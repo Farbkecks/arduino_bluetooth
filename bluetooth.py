@@ -1,3 +1,4 @@
+from re import I
 import serial
 import time
 import keyboard
@@ -8,17 +9,22 @@ port="COM5"
 bluetooth=serial.Serial(port, 9600)
 print("Connected")
 bluetooth.flushInput() #This gives the bluetooth a little kick
-info = [0,0]
+info_olt = 1
 while True:
-    info = [0,0]
+    info = 0
     if keyboard.is_pressed("a"):
-        info[0] = 1
+        info += 1
     elif keyboard.is_pressed("d"):
-        info[0] = 2
+        info += 2
     if keyboard.is_pressed("w"):
-        info[1] = 1
+        info += 4
     time.sleep(.1)
-    bluetooth.write(str.encode(f"{info[0]}{info[1]}"))
-    # print(f"{info[0]}{info[1]}")
+    if info != info_olt:
+        info_olt = info
+        # print(info_olt)
+        bluetooth.write(str.encode(str(info_olt)))
+
+
+
 bluetooth.close() #Otherwise the connection will remain open until a timeout which ties up the /dev/thingamabob
 print("Done")
