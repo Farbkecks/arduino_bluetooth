@@ -13,9 +13,9 @@ info_olt = 1
 while True:
     info = 0
     if keyboard.is_pressed("a"):
-        info += 1
-    elif keyboard.is_pressed("d"):
         info += 2
+    elif keyboard.is_pressed("d"):
+        info += 1
     if keyboard.is_pressed("w"):
         info += 3
     if keyboard.is_pressed("q"):
