@@ -21,10 +21,6 @@ while True:
     if keyboard.is_pressed("q"):
         break
     time.sleep(.1)
-    # if info != info_olt:
-    #     info_olt = info
-    #     # print(info_olt)
-    #     bluetooth.write(str.encode(str(info_olt)))
     bluetooth.write(str.encode(str(info)))
 
 
