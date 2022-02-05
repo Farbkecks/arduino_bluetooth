@@ -18,6 +18,8 @@ while True:
         info += 2
     if keyboard.is_pressed("w"):
         info += 3
+    if keyboard.is_pressed("q"):
+        break
     time.sleep(.1)
     # if info != info_olt:
     #     info_olt = info
