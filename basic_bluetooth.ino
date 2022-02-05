@@ -2,19 +2,12 @@
 #include <Servo.h>
 
 Servo servoblau;
-
 SoftwareSerial serial_connection(10, 11);//Create a serial connection with TX and RX on these pins
-#define BUFFER_SIZE 64//This will prevent buffer overruns.
-char inData[BUFFER_SIZE];//This is a character buffer where the data sent by the python script will go.
-char a2[BUFFER_SIZE-1];
-char inChar=-1;//Initialie the first character as nothing
-int i=0;
 
-int winkel = 0;
-int winkel_old = 90;
-
-
+char inData;
+int winkel = 90;
 int LED = 3;
+int SCHRITT =  10;
 
 void setup()
 {
@@ -27,52 +20,44 @@ void setup()
 }
 void loop()
 {
-  //This will prevent bufferoverrun errors
   byte byte_count=serial_connection.available();//This gets the number of bytes that were sent by the python script
   if(byte_count)//If there are any bytes then deal with them
   {
-    Serial.println("Incoming Data");//Signal to the monitor that something is happening
-    int first_bytes=byte_count;//initialize the number of bytes that we might handle. 
-    int remaining_bytes=0;//Initialize the bytes that we may have to burn off to prevent a buffer overrun
-    if(first_bytes>=BUFFER_SIZE-1)//If the incoming byte count is more than our buffer...
-    {
-      remaining_bytes=byte_count-(BUFFER_SIZE-1);//Reduce the bytes that we plan on handleing to below the buffer size
-    }
-    for(i=0;i<first_bytes;i++)//Handle the number of incoming bytes
-    {
-      inChar=serial_connection.read();//Read one byte
-      inData[i]=inChar;//Put it into a character string(array)
-    }
-    inData[i]='\0';//This ends the character array with a null character. This signals the end of a string
-    for(i=0;i<remaining_bytes;i++)//This burns off any remaining bytes that the buffer can't handle.
-    {
-      inChar=serial_connection.read();
-    }
 
-    if(inData[0] == '1' && winkel < 180){
-      winkel = winkel + 10;
+    inData=serial_connection.read();
+    Serial.println(inData);
+    if(inData=='0'){
+      digitalWrite(LED,0);
     }
-
-    if(inData[0] == '2' && winkel > 0){
-      winkel = winkel - 10;
-    }
-    
-    if(inData[1] == '0'){
+    if(inData=='1'){
+      if(winkel<180){
+        winkel = winkel + SCHRITT;
+      }
       digitalWrite(LED, 0);
     }
-    if(inData[1] == '1'){
+    if(inData=='2'){
+      if(winkel>0){
+        winkel = winkel - SCHRITT;
+      }
+      digitalWrite(LED, 0);
+    }
+    if(inData=='3'){
       digitalWrite(LED, 1);
     }
-
-    
-
-    // analogWrite(LED, String(inData).toInt());
-    if(winkel != winkel_old){
-    winkel_old = winkel;  
-    servoblau.write(winkel_old);
-    Serial.print("Winkel: ");
-    Serial.println(winkel);
+    if(inData=='4'){
+      if(winkel<180){
+        winkel = winkel + SCHRITT;
+      }
+      digitalWrite(LED, 1);
     }
+    if(inData=='5'){
+      if(winkel>0){
+        winkel = winkel - SCHRITT;
+      }
+      digitalWrite(LED, 1);
+    }
+    servoblau.write(winkel);
+    
   }
   delay(100);//Pause for a moment 
 }

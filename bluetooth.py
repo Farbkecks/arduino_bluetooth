@@ -17,12 +17,13 @@ while True:
     elif keyboard.is_pressed("d"):
         info += 2
     if keyboard.is_pressed("w"):
-        info += 4
+        info += 3
     time.sleep(.1)
-    if info != info_olt:
-        info_olt = info
-        # print(info_olt)
-        bluetooth.write(str.encode(str(info_olt)))
+    # if info != info_olt:
+    #     info_olt = info
+    #     # print(info_olt)
+    #     bluetooth.write(str.encode(str(info_olt)))
+    bluetooth.write(str.encode(str(info)))
 
 
 
