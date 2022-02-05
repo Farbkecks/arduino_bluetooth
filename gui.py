@@ -1,5 +1,7 @@
 import tkinter as tk
 
+# https://realpython.com/python-gui-tkinter/
+
 root = tk.Tk()
 
 w= 400
@@ -13,21 +15,23 @@ root.resizable(width=False, height=False)
 
 root.title("Steuerung für Arduino")
 
-label_verbindung = tk.Label(root, text="bluetooth Verbindung", bg="red")
-label_verbindung.pack(fill="both", expand=True);
-# label_verbindung.config(width=400, height=100)
+frame1 = tk.Frame(master=root, height=100, width=400, bg="green", relief=tk.RIDGE, borderwidth=5)
+frame1.pack_propagate(0)
 
-lable_w = tk.Label(root, text="Motor", bg="red")
-lable_w.pack(expand=True, fill="both")
-# lable_w.config(width=400, height=100)
+frame1.place(x=0)
 
-lable_a = tk.Label(root, text="drehung links", bg="red")
-lable_a.pack(expand=True,side= "left", fill="both")
-# lable_a.config(width=400, height=100)
+frame2 = tk.Frame(master=root, height=200,width=400, bg="yellow", relief=tk.GROOVE, borderwidth=5)
+frame2.place(y=100)
 
-lable_d = tk.Label(root, text="drehung rechts", bg="red")
-lable_d.pack(expand=True,side ="right", fill="both")
-# lable_d.config(width=400, height=100)
+frame3 = tk.Frame(master=root, height=100,width=200, bg="blue", relief=tk.SUNKEN, borderwidth=5)
+frame3.place(y=300)
+
+frame4 = tk.Frame(master=root, height=100,width=200, bg="green", relief=tk.GROOVE, borderwidth=5)
+frame4.place(y=300,x=200)
+
+label1 = tk.Label(text="Verbindung", master=frame1)
+label1.config(bg="green", font=("Courier", 30))
+label1.pack(fill=tk.BOTH, expand=True)
 
 
 root.mainloop()
