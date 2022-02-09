@@ -1,27 +1,30 @@
 import tkinter as tk
+from time import sleep
 
 # https://realpython.com/python-gui-tkinter/
 
 
 def keydown(event):
+    sleep(.01)
     if event.char == 'w':
         frame2.config(bg="green", relief=tk.SUNKEN)
         label_2.config(bg="green")
-    if event.char == 'a':
+    elif event.char == 'a':
         frame3.config(bg="green", relief=tk.SUNKEN)
         label_3.config(bg="green")
-    if event.char == 'd':
+    elif event.char == 'd':
         frame4.config(bg="green", relief=tk.SUNKEN)
         label_4.config(bg="green")
 
 def keyup(event):
+    sleep(.01)
     if event.char == 'w':
         frame2.config(bg="red", relief=tk.GROOVE)
         label_2.config(bg="red")
-    if event.char == 'a':
+    elif event.char == 'a':
         frame3.config(bg="red", relief=tk.GROOVE)
         label_3.config(bg="red")
-    if event.char == 'd':
+    elif event.char == 'd':
         frame4.config(bg="red", relief=tk.GROOVE)
         label_4.config(bg="red")
 
@@ -56,13 +59,13 @@ frame1.pack_propagate(0)
 label_1 = tk.Label(frame1, text="Verbindung",bg="red", font=("Courier", 30))
 label_1.pack(fill=tk.BOTH, expand=True)
 frame2.pack_propagate(0)
-label_2 = tk.Label(text="w", master=frame2,bg="red", font=("Courier", 30))
+label_2 = tk.Label(text="W", master=frame2,bg="red", font=("Courier", 30))
 label_2.pack(fill=tk.BOTH, expand=True)
 frame3.pack_propagate(0)
-label_3 = tk.Label(text="a", master=frame3,bg="red", font=("Courier", 30))
+label_3 = tk.Label(text="A", master=frame3,bg="red", font=("Courier", 30))
 label_3.pack(fill=tk.BOTH, expand=True)
 frame4.pack_propagate(0)
-label_4 = tk.Label(text="d", master=frame4,bg="red", font=("Courier", 30))
+label_4 = tk.Label(text="D", master=frame4,bg="red", font=("Courier", 30))
 label_4.pack(fill=tk.BOTH, expand=True)
 
 root.bind("<KeyPress>", keydown)
