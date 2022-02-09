@@ -1,4 +1,3 @@
-from re import I
 import serial
 import time
 import keyboard
