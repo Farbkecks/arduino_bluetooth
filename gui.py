@@ -1,4 +1,6 @@
 import tkinter as tk
+import threading
+from time import sleep
 
 # https://realpython.com/python-gui-tkinter/
 
@@ -46,8 +48,6 @@ class GUI:
         self.root.bind("<KeyPress>", self.keydown)
         self.root.bind("<KeyRelease>", self.keyup)
 
-        self.root.after(1000, self.send)
-
         self.w = False
         self.a = False
         self.d = False
@@ -82,14 +82,23 @@ class GUI:
 
     def send(self):
         print("Sending")
-        print(self.w, self.a, self.d)
+        print(self.w, self.a, self.d) #ersetzen durch send to arduino funktion
         self.root.after(1000, self.send)
+
+def verbindung_on():
+    sleep(1)
+
+    #verbindung herstellen
+
+    gui.label_1.config(bg="green")
+    gui.frame1.config(bg="green")
+
+    gui.root.after(1000, gui.send)
 
 if __name__ == "__main__":
     root = tk.Tk()
     gui = GUI(root)
-
-    gui.label_1.config(bg="green")
-    gui.frame1.config(bg="green")
+    x = threading.Thread(target=verbindung_on, daemon=True)
+    x.start()
 
     root.mainloop()
