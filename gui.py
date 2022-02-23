@@ -1,8 +1,6 @@
 import tkinter as tk
-from time import sleep
 
 # https://realpython.com/python-gui-tkinter/
-
 
 class GUI:
     def __init__(self, root):
@@ -55,7 +53,6 @@ class GUI:
         self.d = False
 
     def keydown(self, event):
-        # sleep(.01)
         if event.char == 'w':
             self.frame2.config(bg="green", relief=tk.SUNKEN)
             self.label_2.config(bg="green")
@@ -70,7 +67,6 @@ class GUI:
             self.d = True
 
     def keyup(self, event):
-        # sleep(.01)
         if event.char == 'w':
             self.frame2.config(bg="red", relief=tk.GROOVE)
             self.label_2.config(bg="red")
@@ -89,11 +85,11 @@ class GUI:
         print(self.w, self.a, self.d)
         self.root.after(1000, self.send)
 
+if __name__ == "__main__":
+    root = tk.Tk()
+    gui = GUI(root)
 
-root = tk.Tk()
-gui = GUI(root)
+    gui.label_1.config(bg="green")
+    gui.frame1.config(bg="green")
 
-gui.label_1.config(bg="green")
-gui.frame1.config(bg="green")
-
-root.mainloop()
+    root.mainloop()
