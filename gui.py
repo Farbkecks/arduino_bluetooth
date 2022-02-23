@@ -48,32 +48,46 @@ class GUI:
         self.root.bind("<KeyPress>", self.keydown)
         self.root.bind("<KeyRelease>", self.keyup)
 
+        self.root.after(1000, self.send)
+
+        self.w = False
+        self.a = False
+        self.d = False
+
     def keydown(self, event):
         # sleep(.01)
         if event.char == 'w':
             self.frame2.config(bg="green", relief=tk.SUNKEN)
             self.label_2.config(bg="green")
+            self.w = True
         elif event.char == 'a':
             self.frame3.config(bg="green", relief=tk.SUNKEN)
             self.label_3.config(bg="green")
+            self.a = True
         elif event.char == 'd':
             self.frame4.config(bg="green", relief=tk.SUNKEN)
             self.label_4.config(bg="green")
+            self.d = True
 
     def keyup(self, event):
         # sleep(.01)
         if event.char == 'w':
             self.frame2.config(bg="red", relief=tk.GROOVE)
             self.label_2.config(bg="red")
+            self.w = False
         elif event.char == 'a':
             self.frame3.config(bg="red", relief=tk.GROOVE)
             self.label_3.config(bg="red")
+            self.a = False
         elif event.char == 'd':
             self.frame4.config(bg="red", relief=tk.GROOVE)
             self.label_4.config(bg="red")
+            self.d = False
 
-def send():
-    print("Sending")
+    def send(self):
+        print("Sending")
+        print(self.w, self.a, self.d)
+        self.root.after(1000, self.send)
 
 
 root = tk.Tk()
