@@ -1,11 +1,12 @@
 import tkinter as tk
 import threading
 from time import sleep
+import serial
 
 # https://realpython.com/python-gui-tkinter/
 
 class GUI:
-    def __init__(self, root):
+    def __init__(self, root, iterate):
         self.root = root
         self.h= 300
         self.w= 400
@@ -52,6 +53,9 @@ class GUI:
         self.a = False
         self.d = False
 
+        self.iterate = iterate
+        self.port = "COM5"
+
     def keydown(self, event):
         if event.char == 'w':
             self.frame2.config(bg="green", relief=tk.SUNKEN)
@@ -82,23 +86,34 @@ class GUI:
 
     def send(self):
         print("Sending")
-        print(self.w, self.a, self.d) #ersetzen durch send to arduino funktion
-        self.root.after(1000, self.send)
 
-def verbindung_on():
-    sleep(1)
+        info = [0,0]
+        if self.a:
+            info[0] = 1
+        elif self.d:
+            info[0] = 2
+        if self.w:
+            info[1] = 1
+        sleep(.1)
+        self.bluetooth.write(str.encode(f"{info[0]}{info[1]}"))
 
-    #verbindung herstellen
+        self.root.after(self.iterate, self.send)
 
-    gui.label_1.config(bg="green")
-    gui.frame1.config(bg="green")
+    def verbindung_on(self):
+        sleep(1)
 
-    gui.root.after(1000, gui.send)
+        self.bluetooth=serial.Serial(self.port, 9600)
+        self.bluetooth.flushInput() #This gives the bluetooth a little kick
+
+        self.label_1.config(bg="green")
+        self.frame1.config(bg="green")
+
+        self.root.after(self.iterate, gui.send)
 
 if __name__ == "__main__":
     root = tk.Tk()
-    gui = GUI(root)
-    x = threading.Thread(target=verbindung_on, daemon=True)
+    gui = GUI(root, 100)
+    x = threading.Thread(target=gui.verbindung_on, daemon=True)
     x.start()
 
     root.mainloop()
