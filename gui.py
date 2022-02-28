@@ -95,7 +95,7 @@ class GUI:
         if self.w:
             info[1] = 1
         sleep(.1)
-        self.bluetooth.write(str.encode(f"{info[0]}{info[1]}"))
+        # self.bluetooth.write(b"00")
 
         self.root.after(self.iterate, self.send)
 
@@ -112,8 +112,7 @@ class GUI:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    gui = GUI(root, 100)
-    x = threading.Thread(target=gui.verbindung_on, daemon=True)
-    x.start()
+    gui = GUI(root, 1000)
+    threading.Thread(target=gui.verbindung_on, daemon=True).start()
 
     root.mainloop()
